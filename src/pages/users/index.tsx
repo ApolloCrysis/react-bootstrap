@@ -21,7 +21,6 @@ const UserList = () => {
 
   return (
     <CommonLayout>
-      <div className="ml-5">Style this only</div>
       <Container fluid>
         <Table striped bordered hover size="sm">
           <thead>
