@@ -4,6 +4,7 @@ import React, { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { Button, Container, Table } from 'react-bootstrap';
 import userData from '../../mock/Users';
+import { CommonLayout } from '../../components';
 
 const UserList = () => {
   const router = useRouter();
@@ -19,34 +20,37 @@ const UserList = () => {
   };
 
   return (
-    <Container fluid>
-      <Table striped bordered hover size="sm">
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>Username</th>
-          </tr>
-        </thead>
-        <tbody>
-          {!!userData &&
-            userData.length > 0 &&
-            userData.map((item, index) => (
-              <tr
-                key={`user-item-${index}`}
-                onClick={() => onItemClick(item)}
-                style={{ cursor: 'pointer' }}
-              >
-                <td>{index + 1}</td>
-                <td>{item.firstName}</td>
-                <td>{item.lastName}</td>
-                <td>{item.userName}</td>
-              </tr>
-            ))}
-        </tbody>
-      </Table>
-    </Container>
+    <CommonLayout>
+      <div className="ml-5">Style this only</div>
+      <Container fluid>
+        <Table striped bordered hover size="sm">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>First Name</th>
+              <th>Last Name</th>
+              <th>Username</th>
+            </tr>
+          </thead>
+          <tbody>
+            {!!userData &&
+              userData.length > 0 &&
+              userData.map((item, index) => (
+                <tr
+                  key={`user-item-${index}`}
+                  onClick={() => onItemClick(item)}
+                  style={{ cursor: 'pointer' }}
+                >
+                  <td>{index + 1}</td>
+                  <td>{item.firstName}</td>
+                  <td>{item.lastName}</td>
+                  <td>{item.userName}</td>
+                </tr>
+              ))}
+          </tbody>
+        </Table>
+      </Container>
+    </CommonLayout>
   );
 };
 

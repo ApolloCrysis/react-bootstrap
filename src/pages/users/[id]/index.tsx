@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import userData from '../../../mock/Users';
-import { Button } from 'react-bootstrap';
+import { Button, Col, Container, Form, Row } from 'react-bootstrap';
+import { CommonLayout } from '../../../components';
 
 interface myUser {
   id: number;
@@ -36,29 +37,77 @@ const UserDetail = () => {
     }
   }, [router]);
 
+  useEffect(() => {
+    setFormData(userDetail);
+  }, [userDetail]);
+
+  const onFieldChange = (e, field) => {
+    setFormData({
+      ...formData,
+      [field]: e.target.value,
+    });
+  };
+
+  const handleSubmitClick = (e) => {
+    e.preventDefault();
+    alert('Saved User');
+    router.push('/users/');
+  };
+
   return (
-    <>
-      <h1>User Detail Page</h1>
-      {!!userDetail && (
-        <>
-          {editing ? (
-            <>
-              <Button onClick={() => setEditing(false)}>Cancel</Button>
-              <Button onClick={() => console.log('do save thing')}>Save</Button>
-              <div>Show form here</div>
-            </>
-          ) : (
-            <div>
-              <Button onClick={() => setEditing(true)}>Edit</Button>
-              <div>ID: {userDetail.id}</div>
-              <div>First Name: {userDetail.firstName}</div>
-              <div>Last Name: {userDetail.lastName}</div>
-              <div>Username: {userDetail.userName}</div>
-            </div>
-          )}
-        </>
-      )}
-    </>
+    <CommonLayout>
+      <Container>
+        <Row>
+          <h1>User Detail Page</h1>
+        </Row>
+        {!!userDetail && (
+          <Row>
+            <Col xs={12} md={10} lg={8}>
+              <Form>
+                <Form.Group className="mb-3" controlId="formFirstName">
+                  <Form.Label>First name</Form.Label>
+                  <Form.Control
+                    type="text"
+                    placeholder="First Name"
+                    value={formData?.firstName || ''}
+                    onChange={(e) => onFieldChange(e, 'firstName')}
+                  />
+                </Form.Group>
+                <Form.Group className="mb-3" controlId="formLastName">
+                  <Form.Label>Last name</Form.Label>
+                  <Form.Control
+                    type="text"
+                    placeholder="Last Name"
+                    value={formData?.lastName || ''}
+                    onChange={(e) => onFieldChange(e, 'lastName')}
+                  />
+                </Form.Group>
+                <Form.Group className="mb-3" controlId="formUserName">
+                  <Form.Label>User name</Form.Label>
+                  <Form.Control
+                    type="text"
+                    placeholder="User Name"
+                    value={formData?.userName || ''}
+                    onChange={(e) => onFieldChange(e, 'userName')}
+                  />
+                </Form.Group>
+                <Form.Group className="mb-3" controlId="formBasicCheckbox">
+                  <Form.Check type="checkbox" label="Admin User" />
+                </Form.Group>
+
+                <Button
+                  variant="primary"
+                  type="submit"
+                  onClick={handleSubmitClick}
+                >
+                  Submit
+                </Button>
+              </Form>
+            </Col>
+          </Row>
+        )}
+      </Container>
+    </CommonLayout>
   );
 };
 
